@@ -42,18 +42,18 @@ module CEA
       end
 
       def ancestors
-        @hash.select { |attr, value| value != :undefined && value != :null }.map do |attr, value|
+        if @hash.values.include? :null
+          s = []
+          p = proc { |v, hs| v.empty? ? s << self.class.new(Hash[*hs]) : v[0].each { |k| p[v[1..v.length], hs + k] } }
+          p[attributes.map { |key, values| values.map { |value| [key, value] } }, []]
+          return s
+        end
+
+        @hash.select { |attr, value| value != :undefined }.map do |attr, value|
           hash = @hash.dup
           hash[attr] = :undefined
           self.class.new(hash)
-        end + @hash.select { |attr, value| value == :null }.map do |attr, value|
-          hash = @hash.dup
-          attributes[attr].map do |value|
-            hash = @hash.dup
-            hash[attr] = value
-            self.class.new(hash)
-          end
-        end.flatten
+        end
       end
     end
   end

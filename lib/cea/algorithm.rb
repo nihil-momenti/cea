@@ -15,10 +15,7 @@ module CEA
         end
       END
 
-      @S = []
-      p = proc { |v, hs| v.empty? ?  @S << hyp.new(Hash[*hs]) : v[0].each { |k| p[v[1..v.length], hs + k] } }
-      p[attributes.map { |key, values| values.map { |value| [key, value] } }, []]
-
+      @S = [ hyp.new(Hash[attributes.map { |key, value| [key, :null] }]) ]
       @G = [ hyp.new(Hash[attributes.map { |key, value| [key, :undefined] }]) ]
     end
 
@@ -41,7 +38,7 @@ module CEA
     end
 
     def classify example
-      @G.any? { |hyp| hyp.covers? example } && @S.all? { |hyp| hyp.covers? example }
+      ((not @S.empty?) and @S.all? { |hyp| hyp.covers? example }) ? :positive : @G.any? { |hyp| hyp.covers? example } ? :unknown : :negative
     end
   end
 end
