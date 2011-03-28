@@ -3,12 +3,15 @@
 require './lib/cea'
 require './data'
 
+require 'rubygems'
+require 'colorize'
+
 correct_case = (ARGV[0] || :soft).to_sym
 algo = CEA::Algorithm.new(Assignment::Data::Attributes)
 
-puts "S:"
+puts "S:".red
 puts algo.S.to_s.chomp
-puts "G:"
+puts "G:".red
 puts algo.G.to_s.chomp
 
 Assignment::Data::Examples.each do |kase, example|
@@ -24,12 +27,13 @@ Assignment::Data::Examples.each do |kase, example|
 
   after = algo.classify example
 
-  puts "Example: #{ example.inspect } ==> #{ kase }"
-  puts "Prior Classification: #{ prior ? 'Positive' : 'Negative' }"
-  puts "After Classification: #{ after ? 'Positive' : 'Negative' }"
+  puts "Example:             ".red
+  puts "   #{ example.inspect } ==> #{ kase }"
+  puts "Prior Classification:".red + " #{ prior }"
+  puts "After Classification:".red + " #{ after }"
   puts "----"
-  puts "S:"
+  puts "S:".red
   puts algo.S.to_s.chomp
-  puts "G:"
+  puts "G:".red
   puts algo.G.to_s.chomp
 end
