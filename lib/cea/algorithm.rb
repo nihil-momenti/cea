@@ -45,5 +45,9 @@ module CEA
     def classify example
       ((not @S.empty?) and @S.all? { |hyp| hyp.covers? example }) ? :positive : @G.any? { |hyp| hyp.covers? example } ? :unknown : :negative
     end
+
+    def is_converged?
+      @S == @G
+    end
   end
 end

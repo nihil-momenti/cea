@@ -7,6 +7,8 @@ module Assignment
       :tear_prod    => [ :reduced, :normal ]
     }
 
+    Cases = [ :none, :soft, :hard ]
+
     Examples = [
       [ :none, { :age => :young,  :prescription => :myope, :astigmatic => :no,  :tear_prod => :reduced } ],
       [ :soft, { :age => :young,  :prescription => :myope, :astigmatic => :no,  :tear_prod => :normal  } ],
