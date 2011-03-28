@@ -141,20 +141,13 @@ def classify number
       end
     ]
     if results.values.one? { |val| val == :positive }
-      key = results.index(:positive)
-      puts "Class: " + key.to_s.green
-    elsif results.values.any? { |val| val == :positive }
-      keys = results.select { |key, val| val == :positive }.map { |key, val| key }
-      converged = Hash[ keys.map { |key| [key, algos[key].is_converged?] } ]
-      if converged.one? { |key, val| val }
-        puts "Class: " + results.index(true).to_s.green
-      elsif converged.none? { |key, val| val }
-        puts "Class: " + "don't know".magenta
-      else
-        puts "Class: " + "error".red
-      end
-    else
+      puts "Class: " + results.index(:positive).to_s.green
+    elsif results.values.any? { |val| val == :unknown }
+      puts "Class: " + "don't know".magenta
+    elsif results.values.none? { |val| val == :positive }
       puts "Class: " + "not classified".magenta
+    else
+      puts "Class: " + "error".red
     end
   end
 end
