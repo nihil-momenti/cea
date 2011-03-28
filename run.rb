@@ -13,7 +13,7 @@ def run
   eval "@data_set = DataSets::#{options[:dataset]}"
   case options[:task]
   when :train
-    train options[:class], options[:number]
+    train (options[:class] || @data_set::DefaultCase), options[:number]
   when :classify
     classify options[:number]
   end
@@ -38,7 +38,7 @@ def init_args
 
     options[:task]    = :train
     options[:number]  = nil
-    options[:class]   = :soft
+    options[:class]   = nil
     options[:dataset] = 'Assignment'
 
     opts.on '-t', '--task TASK', 'Which task to perform (train or classify), default = train' do |task|
@@ -50,7 +50,7 @@ def init_args
       options[:number] = number.to_i
     end
 
-    opts.on '-c', '--class CLASS', 'Which class to train on, only applicable for the training task, default = soft' do |klass|
+    opts.on '-c', '--class CLASS', 'Which class to train on, only applicable for the training task' do |klass|
       options[:class] = klass.to_sym
     end
 

@@ -9,6 +9,8 @@ module DataSets
 
     Cases = [ :none, :soft, :hard ]
 
+    DefaultCase = :soft
+
     Examples = [
       [ :none, { :age => :young,  :prescription => :myope, :astigmatic => :no,  :tear_prod => :reduced } ],
       [ :soft, { :age => :young,  :prescription => :myope, :astigmatic => :no,  :tear_prod => :normal  } ],
@@ -47,6 +49,9 @@ module DataSets
 
     Cases = [ :left, :balanced, :right ]
 
+    DefaultCase = :left
+
+    # Note, this is shuffled below to create a better test set.
     Examples = [
       [ :balanced, { :left_weight => 1, :left_dist => 1, :right_weight => 1, :right_dist => 1 } ],
       [ :right,    { :left_weight => 1, :left_dist => 1, :right_weight => 1, :right_dist => 2 } ],
@@ -673,6 +678,6 @@ module DataSets
       [ :left,     { :left_weight => 5, :left_dist => 5, :right_weight => 5, :right_dist => 3 } ],
       [ :left,     { :left_weight => 5, :left_dist => 5, :right_weight => 5, :right_dist => 4 } ],
       [ :balanced, { :left_weight => 5, :left_dist => 5, :right_weight => 5, :right_dist => 5 } ]
-    ]
+    ].shuffle
   end
 end
