@@ -1,8 +1,3 @@
-require 'rubygems'
-require 'bundler/setup'
-
-require 'colorize'
-
 module CEA
   class Algorithm
     attr_reader :S, :G

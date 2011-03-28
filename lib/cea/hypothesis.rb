@@ -1,8 +1,3 @@
-require 'rubygems'
-require 'bundler/setup'
-
-require 'colorize'
-
 module CEA
   module Private
     class Hypothesis

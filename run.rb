@@ -1,9 +1,14 @@
 #!/usr/bin/env ruby
 
-require 'rubygems'
-require 'bundler/setup'
+begin
+  require 'rubygems'
+  require 'bundler/setup'
+  require 'colorize'
+rescue LoadError
+  require './fallback'
+end
 
-require 'colorize'
+require 'optparse'
 
 require './lib/cea'
 require './data'
