@@ -1,3 +1,8 @@
+require 'rubygems'
+require 'bundler/setup'
+
+require 'colorize'
+
 module CEA
   class Algorithm
     attr_reader :S, :G
@@ -11,7 +16,7 @@ module CEA
         end
 
         def padding
-          #{ Hash[attributes.map { |key, values| [key, (values + [:undefined]).map { |v| v.to_s.length }.max] }].inspect }
+          #{ Hash[attributes.map { |key, values| [key, (values + [:undefined]).map { |v| v.to_s.cyan.length }.max] }].inspect }
         end
       END
 

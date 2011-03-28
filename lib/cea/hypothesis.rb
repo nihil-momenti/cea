@@ -1,3 +1,8 @@
+require 'rubygems'
+require 'bundler/setup'
+
+require 'colorize'
+
 module CEA
   module Private
     class Hypothesis
@@ -18,7 +23,7 @@ module CEA
       end
 
       def to_s
-        "  { #{ @hash.map { |key, value| "#{ key }: #{ (value.to_s + ',').ljust(padding[key] + 1) }" }.join(' ').sub(/,(\s*)$/,' \1') } }\n"
+        "  { #{ @hash.map { |key, value| key.to_s.yellow + ": #{ (value.to_s.cyan + ',').ljust(padding[key] + 1) }" }.join(' ').sub(/,(\s*)$/,' \1') } }\n"
       end
 
       def inspect
