@@ -10,6 +10,7 @@ require './data'
 
 def run
   options = init_args
+  eval "@data_set = DataSets::#{options[:dataset]}"
   case options[:task]
   when :train
     train options[:class], options[:number]
@@ -35,11 +36,12 @@ def init_args
   OptionParser.new do |opts|
     opts.banner = "Usage: #{__FILE__} [options]"
 
-    options[:task] = :train #, :classify
-    options[:number] = nil
-    options[:class] = :soft
+    options[:task]    = :train
+    options[:number]  = nil
+    options[:class]   = :soft
+    options[:dataset] = 'Assignment'
 
-    opts.on '-t', '--task TASK', 'Which task to perform, default = train' do |task|
+    opts.on '-t', '--task TASK', 'Which task to perform (train or classify), default = train' do |task|
       options[:task] = task.to_sym
       options[:number] = 10 if task == 'classify'
     end
@@ -50,6 +52,10 @@ def init_args
 
     opts.on '-c', '--class CLASS', 'Which class to train on, only applicable for the training task, default = soft' do |klass|
       options[:class] = klass.to_sym
+    end
+
+    opts.on '-d', '--dataset DATASET', 'Which dataset to use (Assignment or Balance)' do |dataset|
+      options[:dataset] = dataset
     end
 
     opts.on '-h', '--help', 'Display this screen' do
@@ -69,13 +75,13 @@ def print_algo algo
 end
 
 def train correct_case, number
-  algo = CEA::Algorithm.new(Assignment::Data::Attributes)
+  algo = CEA::Algorithm.new(@data_set::Attributes)
 
   print_algo algo
   puts
   puts "Press enter to step through each example, Ctrl+D to continue to end"
 
-  Assignment::Data::Examples.send(*(number ? [:take, number] : [:each])).each do |kase, example|
+  @data_set::Examples.send(*(number ? [:take, number] : [:each])).each do |kase, example|
     gets # Pause before each example
 
     prior = colourise_classification algo.classify example
@@ -100,12 +106,12 @@ end
 
 def classify number
   algos = Hash[
-    Assignment::Data::Cases.map do |key|
-      [key, CEA::Algorithm.new(Assignment::Data::Attributes)]
+    @data_set::Cases.map do |key|
+      [key, CEA::Algorithm.new(@data_set::Attributes)]
     end
   ]
 
-  Assignment::Data::Examples.take(number).each do |kase, example|
+  @data_set::Examples.take(number).each do |kase, example|
     algos.each do |key, algo|
       if kase == key
         algo.add_positive_example example
@@ -115,22 +121,23 @@ def classify number
     end
   end
 
-  Assignment::Data::Examples.drop(number).each do |kase, example|
+  algos.each do |key, algo|
+    puts "For case: #{key}, Version space is:"
+    print_algo algo
+  end
+
+  @data_set::Examples.drop(number).each do |kase, example|
     puts "For Example:" + example.inspect.light_green
     results = Hash[
       algos.map do |key, algo|
         classification = algo.classify example
-        #puts "#{key} classifies as: #{colourise_classification classification}"
+        puts "#{key} classifies as: #{colourise_classification classification}"
         [key, classification]
       end
     ]
     if results.values.one? { |val| val == :positive }
       key = results.index(:positive)
-      if algos[key].is_converged?
-        puts "Class: " + key.to_s.green
-      else
-        puts "Class: " + "don't know".magenta
-      end
+      puts "Class: " + key.to_s.green
     elsif results.values.any? { |val| val == :positive }
       keys = results.select { |key, val| val == :positive }.map { |key, val| key }
       converged = Hash[ keys.map { |key| [key, algos[key].is_converged?] } ]

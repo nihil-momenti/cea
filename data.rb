@@ -1,5 +1,5 @@
-module Assignment
-  module Data
+module DataSets
+  module Assignment
     Attributes = {
       :age          => [ :young, :middle, :old ],
       :prescription => [ :myope, :hyper ],
