@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+require './backports'
+
 begin
   require 'rubygems'
   require 'bundler/setup'
@@ -84,9 +86,9 @@ def train correct_case, number
 
   print_algo algo
   puts
-  puts "Press enter to step through each example, Ctrl+D to continue to end"
+  puts "Press enter to step through each example#{ RUBY_VERSION < '1.8.7' ? '' : ', Ctrl+D to continue to end'}"
 
-  @data_set::Examples.send(*(number ? [:take, number] : [:each])).each do |kase, example|
+  @data_set::Examples.send(*(number ? [:take, number] : [:+, []])).each do |kase, example|
     gets # Pause before each example
 
     prior = colourise_classification algo.classify example

@@ -1,6 +1,9 @@
-puts "Error: Colorize gem not available, falling back to uncoloured output."
-puts "See README.md for details."
-puts
+puts <<END
++=======================================================================+
+| Error: Colorize gem not available, falling back to uncoloured output. |
+| See README.md for details.                                            |
++=======================================================================+
+END
 
 class String
   def colorize( params ); self end
