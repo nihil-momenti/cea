@@ -5,6 +5,8 @@ puts <<END
 +=======================================================================+
 END
 
+# Defines the colorize methods to do nothing
+
 class String
   def colorize( params ); self end
   def uncolorize; self end

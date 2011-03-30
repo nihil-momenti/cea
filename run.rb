@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+# Defines some 1.8.7 methods that 1.8.6 is missing.
 require './backports'
 
 begin
@@ -15,8 +16,9 @@ require 'optparse'
 require './lib/cea'
 require './data'
 
+# The main runner.
 def run
-  options = init_args
+  options = parse_args
   eval "@data_set = DataSets::#{options[:dataset]}"
   case options[:task]
   when :train
@@ -37,7 +39,7 @@ def colourise_classification classification
   end
 end
 
-def init_args
+def parse_args
   options = {}
 
   OptionParser.new do |opts|

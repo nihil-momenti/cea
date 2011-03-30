@@ -1,16 +1,11 @@
+# If running in Ruby 1.8.6 define the new methods from 1.8.7 that I use.
+# All the complex methods have been directly pulled out of the Rubinius source.
+
 if RUBY_VERSION < '1.8.7'
   class Array
-    def shuffle
-      sort_by { rand }
-    end
-
-    def take n
-      first n
-    end
-
-    def drop n
-      last (length - n)
-    end
+    def shuffle; sort_by { rand } end
+    def take n; first n end
+    def drop n; last (length - n) end
 
     def one?
       found_one = false
