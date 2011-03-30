@@ -42,6 +42,7 @@ module CEA
       end
 
       def ancestors
+        # Builds all the combinations of attributes if it's the null hypothesis.
         if @hash.values.include? :null
           s = []
           p = proc { |v, hs| v.empty? ? s << self.class.new(Hash[*hs]) : v[0].each { |k| p[v[1..v.length], hs + k] } }
