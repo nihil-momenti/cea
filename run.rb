@@ -1,14 +1,11 @@
 #!/usr/bin/env ruby
 
-# Defines some 1.8.7 methods that 1.8.6 is missing.
-require './backports'
+require './hacks/backports'
 
 begin
-  require 'rubygems'
-  require 'bundler/setup'
-  require 'colorize'
-rescue LoadError
-  require './fallback'
+  require './hacks/colorize'
+rescue
+  require './hacks/fallback'
 end
 
 require 'optparse'
