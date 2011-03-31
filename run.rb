@@ -22,7 +22,7 @@ def run
   eval "@data_set = DataSets::#{options[:dataset]}"
   case options[:task]
   when :train
-    train (options[:class] || @data_set::DefaultCase), options[:number]
+    train (options[:class] || @data_set::DefaultCase), options[:number], options[:pause]
   when :classify
     classify options[:number]
   end
@@ -49,6 +49,7 @@ def parse_args
     options[:number]  = nil
     options[:class]   = nil
     options[:dataset] = 'Assignment'
+    options[:pause]   = false
 
     opts.on '-t', '--task TASK', 'Which task to perform (train or classify), default = train' do |task|
       options[:task] = task.to_sym
@@ -67,6 +68,10 @@ def parse_args
       options[:dataset] = dataset
     end
 
+    opts.on '-p', '--pause', 'To pause between examples' do
+      options[:pause] = true
+    end
+
     opts.on '-h', '--help', 'Display this screen' do
       puts opts
       exit
@@ -83,15 +88,15 @@ def print_algo algo
   puts algo.G.to_s.chomp
 end
 
-def train correct_case, number
+def train correct_case, number, pause
   algo = CEA::Algorithm.new(@data_set::Attributes)
 
   print_algo algo
   puts
-  puts "Press enter to step through each example#{ RUBY_VERSION < '1.8.7' ? '' : ', Ctrl+D to continue to end'}"
+  puts "Press enter to step through each example#{ RUBY_VERSION < '1.8.7' ? '' : ', Ctrl+D to continue to end'}" if pause
 
   @data_set::Examples.send(*(number ? [:take, number] : [:+, []])).each do |kase, example|
-    gets # Pause before each example
+    gets if pause
 
     prior = colourise_classification algo.classify example
 
