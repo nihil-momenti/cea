@@ -21,8 +21,8 @@ as `Enumerable#one?` and `Hash.[]` were taken from the Rubinius source code.`
 `colorize.rb`
 -------------
 
-This file itself isn't really a hack.  Its existence here however is.  This is
-the main (/only) file from the colorize gem, normally you would use `require
+This file itself isn't really a hack.  Its existence here, however is.  This is
+the main(/only) file from the colorize gem, normally you would use `require
 'rubygems'; require 'colorize'` to load it but to make this assignment easier
 to install and run I decided it would be better to pull it out to here.  So
 this isn't my work, thanks go out to [fazibear](mailto:fazibear@gmail.com) for
