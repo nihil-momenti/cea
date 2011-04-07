@@ -13,4 +13,10 @@ Implementing Mitchell's Candidate Elimination Algorithm
   :depth: 2
   :backlinks: top
 
+Training
+========
+
 .. include:: soft_train.rst
+
+Classifying
+===========
