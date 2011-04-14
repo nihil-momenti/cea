@@ -12,7 +12,13 @@ module CEA
         end
 
         def padding
-          #{ Hash[attributes.map { |key, values| [key, (values + [:undefined]).map { |v| v.to_s.cyan.length }.max] }].inspect }
+          #{
+              Hash[
+                attributes.map do |key, values|
+                  [key, (values + [:undefined]).map { |v| v.to_s.cyan.length }.max]
+                end
+              ].inspect 
+           }
         end
       END
 
@@ -50,11 +56,30 @@ module CEA
     end
 
     def classify example
-      ((not @S.empty?) and @S.all? { |hyp| hyp.covers? example }) ? :positive : @G.any? { |hyp| hyp.covers? example } ? :unknown : :negative
+      # If the example is covered by every hypothesis in S then it is
+      # classified as :positive else, if the example is covered by any
+      # hypothesis in G then it is classified as :unknown else it is classified
+      # as :negative
+      if (not @S.empty?) and @S.all? { |hyp| hyp.covers? example }
+        :positive
+      elsif @G.any? { |hyp| hyp.covers? example } 
+        :unknown
+      else
+        :negative
+      end
     end
 
-    def is_converged?
-      @S == @G
+    def convergent_state
+      # Convergence is simply when the version space has reduced to just a
+      # single hypothesis in both S and G, if either S or G are empty then the
+      # example set is inconsitent
+      if @S.empty? or @G.empty?
+        :inconsistent
+      elsif @S == @G
+        :converged
+      else
+        :unconverged
+      end
     end
   end
 end

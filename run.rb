@@ -142,7 +142,7 @@ def classify number
     results = Hash[
       algos.map do |key, algo|
         classification = algo.classify example
-        puts "#{key} (#{algo.is_converged? ? "conv".green : "unco".red}) classifies as: #{colourise_classification classification}"
+        puts "#{key} (#{algo.convergent_state == :converged ? "conv".green : "unco".red}) classifies as: #{colourise_classification classification}"
         [key, classification]
       end
     ]
