@@ -135,6 +135,7 @@ def classify number
   algos.each do |key, algo|
     puts "For case: #{key}, Version space is:"
     print_algo algo
+    puts "===="
   end
 
   @data_set::Examples.drop(number).each do |kase, example|
