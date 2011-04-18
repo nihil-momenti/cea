@@ -139,7 +139,8 @@ def classify number
   end
 
   @data_set::Examples.drop(number).each do |kase, example|
-    puts "For Example:" + example.inspect.light_green
+    puts "For Example: " + example.inspect.light_green
+    puts "               => ".light_green + kase.to_s.light_green
     results = Hash[
       algos.map do |key, algo|
         classification = algo.classify example
@@ -156,6 +157,7 @@ def classify number
     else
       puts "Class: " + "error".red
     end
+    puts
   end
 end
 
