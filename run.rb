@@ -57,15 +57,15 @@ def parse_args
       options[:number] = number.to_i
     end
 
-    opts.on '-c', '--class CLASS', 'Which class to train on, only applicable for the training task' do |klass|
+    opts.on '-c', '--class CLASS', 'Which class to train on, only applicable for the training task, default = train' do |klass|
       options[:class] = klass.to_sym
     end
 
-    opts.on '-d', '--dataset DATASET', 'Which dataset to use (Assignment or Balance)' do |dataset|
+    opts.on '-d', '--dataset DATASET', 'Which dataset to use, default = Assignment' do |dataset|
       options[:dataset] = dataset
     end
 
-    opts.on '-p', '--pause', 'To pause between examples' do
+    opts.on '-p', '--pause', 'Enable to pause between examples' do
       options[:pause] = true
     end
 
