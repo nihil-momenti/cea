@@ -80,9 +80,9 @@ end
 
 def print_algo algo
   puts "S:"
-  puts algo.S.join("\n").chomp
+  puts algo.S.join('').chomp
   puts "G:"
-  puts algo.G.join("\n").chomp
+  puts algo.G.join('').chomp
 end
 
 def train correct_case, number, pause
