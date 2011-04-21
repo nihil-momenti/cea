@@ -40,3 +40,10 @@ the data structure chosen, the overall result is identical:
            i. Remove all hypotheses *g* in G that are not consistent with *d*
            #. Add all descendants of each hypothesis *g* to G
            #. Remove from G any hypothesis that is more specific than another in G
+
+The largest change with this algorithm is in performance.  The original
+algorithm removed hypotheses that do not cover/are inconsistent with the example
+while generalising/specialising the sets.  This version keeps generalising and
+specialising these hypotheses until they are consistent, they will then be
+removed from the set as they are just a more general/specific version of one of
+the other hypotheses in the set.
