@@ -147,7 +147,10 @@ Some more negative/consistent and positive/covered examples::
 
 And we hit an inconsistency, a positive examples that is not covered by ``G`` or
 ``S``.  To fix this ``S`` is made more general and ``G`` is blanked out as it was
-inconsistent with the new ``S``::
+inconsistent with the new ``S``.  Since ``G`` is now empty we no longer have any
+ability to determine if an example is negative, we can only know that all
+positives will definitely be classified as positive but some negatives will
+appear as false positives::
 
     Prior Classification: negative
     After Classification: positive
