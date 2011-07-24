@@ -30,7 +30,7 @@ module CEA
       # hypothesis has either the same value or :undefined for all attributes.
       def covers? other
         @hash.keys.all? do |attr|
-          self[attr] == other[attr] || self[attr] == :undefined
+          self[attr] == other[attr] || self[attr] == :undefined || other[attr] == :null
         end
       end
 

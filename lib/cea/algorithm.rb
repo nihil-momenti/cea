@@ -38,7 +38,10 @@ module CEA
         @S += temp.map { |hyp| hyp.ancestors }.flatten
         # Remove any hypotheses in S that cover another hypothesis in S
         @S -= @S.select { |hyp| (@S - [hyp]).any? { |test| hyp.covers? test } }
+        @S -= @S.reject { |hyp| @G.all? { |test| test.covers? hyp } }
       end
+      @S = [] if @G.empty?
+      @G = [] if @S.empty?
     end
 
     def add_negative_example example
@@ -52,7 +55,10 @@ module CEA
         @G += temp.map { |hyp| hyp.descendants }.flatten
         # Remove any hypotheses in G that are covered by another hypothesis in G
         @G -= @G.select { |hyp| (@G - [hyp]).any? { |test| test.covers? hyp } }
+        @G -= @G.reject { |hyp| @S.all? { |test| hyp.covers? test } }
       end
+      @S = [] if @G.empty?
+      @G = [] if @S.empty?
     end
 
     def classify example
